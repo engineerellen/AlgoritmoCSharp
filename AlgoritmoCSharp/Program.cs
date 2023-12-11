@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.IO;
-using Newtonsoft.Json;
-using System.Linq;
 
 namespace AlgoritmoCSharp
 {
@@ -12,8 +12,28 @@ namespace AlgoritmoCSharp
     {
         static void Main(string[] args)
         {
-            ConverterJson();
+            Console.WriteLine(DifferentCases("a b c d-e-f%g") == "ABCDEFG");
+            Console.WriteLine(DifferentCases("Daniel LikeS-coding") == "DanielLikesCoding");
+
             Console.ReadLine();
+        }
+
+        public static string DifferentCases(string str)
+        {
+            str = str.ToLower();
+            var newString = string.Empty;
+
+            var regex = @"[ \-%]";
+            var strSplit = Regex.Split(str, regex);
+
+            foreach (var item in strSplit)
+            {
+                newString += item.Substring(0,1).ToUpper() + item.Substring(1);
+            }
+
+            str = newString;
+
+            return str;
         }
 
         public static void ConverterJson()
@@ -27,11 +47,11 @@ namespace AlgoritmoCSharp
 
             var countAge = 0;
 
-            foreach ( var item in contentArr ) 
+            foreach (var item in contentArr)
             {
                 int age = int.TryParse(item.Split('=').Last(), out var parseAge) ? parseAge : 0;
 
-                if (age >= 50) 
+                if (age >= 50)
                     countAge++;
             }
             Console.WriteLine($"There are {countAge} people greater 50 years old!");
@@ -134,7 +154,6 @@ namespace AlgoritmoCSharp
         }
 
         #endregion
-
 
         #region Condições
 
@@ -321,6 +340,4 @@ public class Produto
         return lstProdutos;
 
     }
-
-
 }

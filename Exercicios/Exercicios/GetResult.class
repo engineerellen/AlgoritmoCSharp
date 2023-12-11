@@ -1,0 +1,99 @@
+
+//ground
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+class Solution
+{
+    /**
+     * Implement method GetResult
+     */
+    public static int GetResult(List<int> ground)
+    {
+        int arraySum, smallest,
+            arr_size = arr.Length;
+            arraySum = 0;
+            smallest = arr[0];
+
+            for (int i = 0; i < arr_size; i++)
+            {
+                /* If current element is
+                smaller than update smallest */
+                if (arr[i] < smallest)
+                    smallest = arr[i];
+
+                /*find array sum */
+                arraySum += arr[i];
+            }
+            int minOperation = 0;
+            if (arr.Length > 3)
+            {
+                minOperation = arraySum -
+                                arr_size * smallest - 2;
+            }
+            else
+                minOperation = arraySum -
+                                arr_size * smallest;
+           return minOperation;
+    }
+
+    public static void RunCode()
+    {
+        
+            Console.Write("Minimum Operation = " +
+                                );
+
+    }
+}
+
+
+//adventure
+
+using System;
+using System.Collections.Generic;
+					
+public class Program
+{
+	
+	/*
+	An adventurer finds himself in a dungeon full of treasures. However, before entering he has activated a trap, which in t minutes will flood the entire room. 
+	You are given an array of chests chests where chests[i] is the number of treasures in the chest. The explorer can either pick up the treasure i, 
+	taking one minute, or move to the next chest (i+1), 
+	which also takes one minute. It starts at position zero, it is not necessary to reach the end of the array coderbyte
+	*/
+	public static void Main()
+	{
+		// result should be an 8
+	//List<int> chests = new List<int> {7,8,9};  // result shoult be 8
+   // int t = 2; 
+		
+		// result should be a 5
+		List<int> chests = new List<int> {1,4,2};
+		int t = 3; 
+    	Console.Write("Maximum treasure that can be collected is "+ GetResult(chests, t)); 
+
+	}
+	
+	
+static int GetResult(List<int> chests, int t)
+        {
+			if (t <= 0 || chests.Count <=0)
+				return 0;
+
+			var c = chests[0];
+			chests.RemoveAt(0);
+
+
+			if (c == 0)
+				return GetResult(chests, t - 1);
+			else
+			{
+				var ch = chests;
+				ch.Insert(0, 0);
+				return Math.Max(c + GetResult(ch, t - 1), GetResult(chests, t - 1));
+			}
+			
+        } 
+
+}
